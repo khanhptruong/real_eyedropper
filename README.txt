@@ -23,7 +23,7 @@ Raspberry Pi 4 Model B (or similar)
 Raspberry Pi High Resolution Camera Module
 Arduino Uno (or similar)
 x2 4-Digit 7-Segment Displays (common cathode)
-SN74HC595 Shift Registers
+SN74HC595N Shift Registers
 x7 1k Resistors
 10k Resistor
 Push Button
