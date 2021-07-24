@@ -2,9 +2,11 @@
 The goal of this project is to create a physical device that functions like photoshop's (or any image editor's) eyedropper too. In other words, the device will take a color sample and return the color's hex value (ie #ffffff) to the user. While this project could more conveniently be created in the form of a smartphone app, the goal is to demonstrate how this can be done with more fundamental hardware components and microcontrollers. In other words, the goal of this project is practice, not practicality.
 
 # Theory
-The project uses a Raspberry Pi and Camera Modules in order to sample colors and process the color information. The Pi is connected via serial connection to an Arduino, which is responsible for interfacing with the push button controls and the 7segment displays. Below is a brief diagram of the project's program flow.
+The project uses a Raspberry Pi and Camera Modules in order to sample colors and process the color information. The Pi is connected via serial connection to an Arduino, which is responsible for interfacing with the push button controls and the 7segment displays.
 
 Color sampling occurs by averaging the squares of the color values of each pixel in the sample space, and then taking the root of the sum. This method produces more accurate results than merely taking an average. 
+
+![color_avg](https://raw.githubusercontent.com/khanhptruong/real_eyedropper/gh-pages/docs/assets/color_avg_equation.jpg)
 
 # Required Hardware
 - Raspberry Pi 4 Model B
@@ -24,42 +26,27 @@ Color sampling occurs by averaging the squares of the color values of each pixel
 
 *_Note the [datasheets](https://cdn-shop.adafruit.com/datasheets/865datasheet.pdf) for the 4-Digit 7-Segment Displays show an incorrect number of pins. They show 12 pins when there in fact 14. Below is the correct pin order, with pin7 and pin8 controling the colon on the display. Magenta colored font indicates the corrections I've made to the [original datasheet](https://cdn-shop.adafruit.com/datasheets/865datasheet.pdf)._
 
+![7seg](https://raw.githubusercontent.com/khanhptruong/real_eyedropper/gh-pages/docs/assets/7seg-correction.jpg)
+
 # Required Software
 - python (included with Raspberry Pi OS)
 - picamera (included with Raspberry Pi OS)
 - Pillow PIL Fork
 
-### Markdown
+# Design
+The design of the project is relatively simple, below are diagrams of the program flow and the hardware schematics:
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+![pi_progflow](https://raw.githubusercontent.com/khanhptruong/real_eyedropper/gh-pages/docs/assets/pi_progflow.jpg)
 
-```markdown
-Syntax highlighted code block
+![arduo_proflow](https://raw.githubusercontent.com/khanhptruong/real_eyedropper/gh-pages/docs/assets/arduino_progflow.jpg)
 
-# Header 1
-## Header 2
-### Header 3
+![schematic](https://raw.githubusercontent.com/khanhptruong/real_eyedropper/gh-pages/docs/assets/real_eyedropper_schematic.png)
 
-- Bulleted
-- List
+A few things to note:
+- in order to prevent bleeding in the 7 segment display, clear the 7 segments between moving to the next digit
+- resistors are wired to the segment outputs, wiring to the digit outputs causes voltage drop that dims the display
 
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/khanhptruong/real_eyedropper/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
-
-
-
+# Notes for Future Improvement
+- Color accuracy is heavily affected by exposure and lighting. Adding a controlled light source such as a ringlight can make color readings more consistent.
+- The current version lacks portability, a shell, power source, and portable monitor can be implemented to make the device truely portable.
+- The is a delay before the camera samples a color, delay can be minimized by not turning display on and off constantly.
