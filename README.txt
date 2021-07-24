@@ -4,6 +4,8 @@ github id: khanhptruong
 Real Eyedropper Project
 July 7, 2021
 
+For more detailed info, visit github page: https://khanhptruong.github.io/real_eyedropper/
+
 -----------
 Description
 -----------
